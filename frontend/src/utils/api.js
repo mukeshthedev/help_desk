@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE = 'https://helpdesk-backend-production-a1e2.up.railway.app/api';
+const API_BASE = 'http://localhost:5000/api';
 
 const api = axios.create({
   baseURL: API_BASE,
