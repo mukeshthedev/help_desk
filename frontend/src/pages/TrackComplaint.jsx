@@ -81,11 +81,10 @@ export default function TrackComplaint({ defaultTicketId = '' }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // Auto-search if ticket ID passed in
-useEffect(() => {
-  if (defaultTicketId) handleTrack(defaultTicketId);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [defaultTicketId]);
+  useEffect(() => {
+    if (defaultTicketId) handleTrack(defaultTicketId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultTicketId]);
 
   const handleTrack = async (id) => {
     const searchId = (id || ticketId).trim().toUpperCase();
@@ -143,13 +142,26 @@ useEffect(() => {
           <button onClick={toggleTheme} style={{ background:'var(--surface-2)', border:'1px solid var(--border)', borderRadius:8, padding:'0.4rem 0.875rem', cursor:'pointer', color:'var(--text-secondary)', fontSize:'0.8rem', display:'flex', alignItems:'center', gap:'0.4rem' }}>
             {isDark ? '☀️ Light' : '🌙 Dark'}
           </button>
-          <a href="/submit" style={{ background:'var(--accent)', color:'white', borderRadius:8, padding:'0.4rem 0.875rem', fontSize:'0.8rem', fontWeight:600, textDecoration:'none' }}>
-            Submit Complaint
-          </a>
           <a href="/admin/login" style={{ background:'var(--surface-2)', border:'1px solid var(--border)', color:'var(--text-secondary)', borderRadius:8, padding:'0.4rem 0.875rem', fontSize:'0.8rem', textDecoration:'none', display:'flex', alignItems:'center', gap:'0.4rem' }}>
             <Shield size={13} /> Admin
           </a>
         </div>
+      </div>
+
+      {/* Back Button - Fixed Top Left */}
+      <div style={{ position:'fixed', top:'5rem', left:'1.5rem', zIndex:20 }}>
+        <a href="/submit" style={{
+          display:'inline-flex', alignItems:'center', gap:'0.5rem',
+          background:'var(--surface)', border:'1px solid var(--border)',
+          color:'var(--text-secondary)', fontSize:'0.82rem', textDecoration:'none',
+          fontWeight:600, borderRadius:10, padding:'0.5rem 1rem',
+          boxShadow:'var(--shadow)', transition:'all 0.2s ease'
+        }}
+          onMouseEnter={e => { e.currentTarget.style.color='var(--accent)'; e.currentTarget.style.borderColor='var(--accent)'; }}
+          onMouseLeave={e => { e.currentTarget.style.color='var(--text-secondary)'; e.currentTarget.style.borderColor='var(--border)'; }}
+        >
+          ← Back to Complaint
+        </a>
       </div>
 
       {/* Main */}
@@ -280,7 +292,7 @@ useEffect(() => {
                         <div style={{ width:2, height:28, background:'var(--border)', margin:'2px 0' }} />
                       )}
                     </div>
-                    <div style={{ paddingTop:'0.4rem', paddingBottom: i < arr.length - 1 ? '0' : '0' }}>
+                    <div style={{ paddingTop:'0.4rem' }}>
                       <div style={{ fontSize:'0.875rem', fontWeight:600, color:'var(--text-primary)' }}>{label}</div>
                       <div style={{ fontSize:'0.78rem', color:'var(--text-muted)', marginTop:'0.1rem' }}>
                         {new Date(time).toLocaleString('en-IN', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' })}
@@ -296,6 +308,7 @@ useEffect(() => {
               <span>📧</span>
               <span>Need help? Email us at <a href="mailto:support@college.edu" style={{ color:'var(--accent-light)', fontWeight:600 }}>support@college.edu</a> with your Ticket ID.</span>
             </div>
+
           </div>
         )}
       </div>
