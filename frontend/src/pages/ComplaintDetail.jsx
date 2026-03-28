@@ -80,40 +80,73 @@ export default function ComplaintDetail() {
 
   return (
     <div className="fade-in">
+      <style>{`
+        @media (max-width: 768px) {
+          .detail-grid { grid-template-columns: 1fr !important; }
+          .detail-header { flex-direction: column !important; gap: 0.75rem !important; }
+          .detail-header .btn-primary { width: 100% !important; justify-content: center !important; }
+          .ticket-title { flex-wrap: wrap !important; font-size: 1.1rem !important; }
+          .student-grid { grid-template-columns: 1fr 1fr !important; }
+          .issue-meta { flex-direction: column !important; gap: 0.75rem !important; }
+          .mgmt-grid { grid-template-columns: 1fr !important; }
+          .email-modal-card { max-height: 90vh !important; }
+        }
+        @media (max-width: 480px) {
+          .student-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
+
       {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem' }}>
-        <div>
-          <button className="btn btn-outline" style={{ marginBottom: '0.75rem' }}
-            onClick={() => navigate('/complaints')}>
+      <div className="detail-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem' }}>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <button
+            className="btn btn-outline"
+            style={{ marginBottom: '0.75rem' }}
+            onClick={() => navigate('/complaints')}
+          >
             <ArrowLeft size={15} />Back
           </button>
-          <h1 style={{ fontSize: '1.5rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <span className="mono" style={{ color: 'var(--accent-light)' }}>{c.ticketId}</span>
+          <h1 className="ticket-title" style={{ fontSize: '1.4rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+            <span className="mono" style={{ color: 'var(--accent-light)', fontSize: '1rem' }}>{c.ticketId}</span>
             <span className={`badge ${statusClass[c.status]}`}>{c.status}</span>
             <span className={`badge ${priorityClass[c.priority]}`}>{c.priority}</span>
           </h1>
-          <p style={{ color: 'var(--text-secondary)', marginTop: '0.25rem' }}>{c.issueSummary}</p>
+          <p style={{ color: 'var(--text-secondary)', marginTop: '0.35rem', fontSize: '0.9rem', lineHeight: 1.5 }}>
+            {c.issueSummary}
+          </p>
         </div>
         {isAdmin && (
-          <button className="btn btn-primary" onClick={handleSave} disabled={saving}>
+          <button className="btn btn-primary" onClick={handleSave} disabled={saving} style={{ flexShrink: 0 }}>
             <Save size={15} />{saving ? 'Saving...' : 'Save Changes'}
           </button>
         )}
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 360px', gap: '1.25rem' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+      {/* Main Grid */}
+      <div className="detail-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 360px', gap: '1.25rem' }}>
+
+        {/* Left Column */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', minWidth: 0 }}>
 
           {/* Student Info */}
           <div className="card">
             <div className="section-title" style={{ marginBottom: '1rem' }}>
               <User size={15} color="var(--accent)" />Student Information
             </div>
-            <div className="grid-2">
-              {[['Name', c.studentName], ['Student ID', c.studentId], ['Email', c.studentEmail], ['Department', c.department]].map(([label, value]) => (
+            <div className="student-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              {[
+                ['Name', c.studentName],
+                ['Student ID', c.studentId],
+                ['Email', c.studentEmail],
+                ['Department', c.department]
+              ].map(([label, value]) => (
                 <div key={label}>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600, marginBottom: '0.2rem' }}>{label}</div>
-                  <div style={{ color: 'var(--text-primary)', fontSize: '0.9rem' }}>{value}</div>
+                  <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600, marginBottom: '0.2rem' }}>
+                    {label}
+                  </div>
+                  <div style={{ color: 'var(--text-primary)', fontSize: '0.875rem', wordBreak: 'break-word' }}>
+                    {value}
+                  </div>
                 </div>
               ))}
             </div>
@@ -124,26 +157,32 @@ export default function ComplaintDetail() {
             <div className="section-title" style={{ marginBottom: '1rem' }}>
               <Tag size={15} color="var(--accent)" />Issue Details
             </div>
-            <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '1rem' }}>
+            <div className="issue-meta" style={{ display: 'flex', gap: '1.5rem', marginBottom: '1rem' }}>
               {[['Category', c.issueCategory], ['Location', c.location || 'N/A']].map(([label, value]) => (
                 <div key={label}>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600, marginBottom: '0.2rem' }}>{label}</div>
-                  <div style={{ color: 'var(--text-primary)', fontSize: '0.9rem' }}>{value}</div>
+                  <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600, marginBottom: '0.2rem' }}>
+                    {label}
+                  </div>
+                  <div style={{ color: 'var(--text-primary)', fontSize: '0.875rem' }}>{value}</div>
                 </div>
               ))}
             </div>
-            <div style={{ background: 'var(--surface-2)', borderRadius: 'var(--radius-sm)', padding: '1rem', color: 'var(--text-secondary)', lineHeight: 1.7, fontSize: '0.9rem' }}>
+            <div style={{
+              background: 'var(--surface-2)', borderRadius: 'var(--radius-sm)',
+              padding: '1rem', color: 'var(--text-secondary)',
+              lineHeight: 1.7, fontSize: '0.875rem'
+            }}>
               {c.issueDescription}
             </div>
           </div>
 
-          {/* Ticket Management — Admin Only */}
+          {/* Ticket Management */}
           {isAdmin ? (
             <div className="card">
               <div className="section-title" style={{ marginBottom: '1rem' }}>
                 <FileText size={15} color="var(--accent)" />Ticket Management
               </div>
-              <div className="grid-2" style={{ marginBottom: '1rem' }}>
+              <div className="mgmt-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
                 <div className="form-group" style={{ marginBottom: 0 }}>
                   <label className="form-label">Status</label>
                   <select className="form-select" value={edits.status}
@@ -172,12 +211,21 @@ export default function ComplaintDetail() {
                   value={edits.resolutionNotes}
                   onChange={e => setEdits(ed => ({ ...ed, resolutionNotes: e.target.value }))} />
               </div>
+
+              {/* Save button — mobile only bottom */}
+              <button
+                className="btn btn-primary save-mobile"
+                onClick={handleSave}
+                disabled={saving}
+                style={{ width: '100%', justifyContent: 'center', marginTop: '1rem', display: 'none' }}
+              >
+                <Save size={15} />{saving ? 'Saving...' : 'Save Changes'}
+              </button>
             </div>
           ) : (
             <div className="card" style={{
               textAlign: 'center', padding: '2.5rem',
-              border: '1px dashed var(--border-hover)',
-              animation: 'fadeIn 0.4s ease'
+              border: '1px dashed var(--border-hover)'
             }}>
               <div style={{
                 width: 56, height: 56, borderRadius: '50%',
@@ -200,7 +248,7 @@ export default function ComplaintDetail() {
           )}
         </div>
 
-        {/* Right sidebar */}
+        {/* Right Sidebar */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
 
           {/* Timeline */}
@@ -210,8 +258,8 @@ export default function ComplaintDetail() {
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.875rem' }}>
               {[
-                { icon: AlertCircle, color: 'var(--accent)', label: 'Ticket Created', time: c.createdAt },
-                { icon: Clock, color: 'var(--warning)', label: 'Last Updated', time: c.updatedAt },
+                { icon: AlertCircle, color: 'var(--accent)',   label: 'Ticket Created', time: c.createdAt },
+                { icon: Clock,       color: 'var(--warning)',  label: 'Last Updated',   time: c.updatedAt },
                 ...(c.resolvedAt ? [{ icon: CheckCircle, color: 'var(--success)', label: 'Resolved', time: c.resolvedAt }] : [])
               ].map(({ icon: Icon, color, label, time }) => (
                 <div key={label} style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
@@ -225,7 +273,7 @@ export default function ComplaintDetail() {
                   </div>
                   <div>
                     <div style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-primary)' }}>{label}</div>
-                    <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                    <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
                       {new Date(time).toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
                     </div>
                   </div>
@@ -234,7 +282,7 @@ export default function ComplaintDetail() {
             </div>
           </div>
 
-          {/* Email Templates — Admin Only */}
+          {/* Email Templates */}
           {isAdmin && (
             <div className="card">
               <div className="section-title" style={{ marginBottom: '1rem' }}>
@@ -243,9 +291,9 @@ export default function ComplaintDetail() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                 {[
                   { type: 'acknowledgment', label: 'Send Acknowledgment' },
-                  { type: 'inProgress', label: 'In Progress Update' },
-                  { type: 'resolved', label: 'Resolution Email' },
-                  { type: 'followUp', label: 'Follow-Up Email' }
+                  { type: 'inProgress',     label: 'In Progress Update'  },
+                  { type: 'resolved',       label: 'Resolution Email'    },
+                  { type: 'followUp',       label: 'Follow-Up Email'     }
                 ].map(({ type, label }) => (
                   <button key={type} className="btn btn-outline"
                     style={{ justifyContent: 'flex-start' }}
@@ -265,28 +313,27 @@ export default function ComplaintDetail() {
           position: 'fixed', inset: 0,
           background: 'rgba(0,0,0,0.7)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          zIndex: 999, padding: '1rem',
-          animation: 'fadeIn 0.2s ease'
+          zIndex: 999, padding: '1rem'
         }}>
-          <div className="card" style={{ maxWidth: 640, width: '100%', maxHeight: '80vh', overflow: 'auto' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
-              <h3>Email Preview</h3>
+          <div className="card email-modal-card" style={{ maxWidth: 640, width: '100%', maxHeight: '80vh', overflow: 'auto' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+              <h3 style={{ fontSize: '1rem' }}>Email Preview</h3>
               <button className="btn btn-outline" style={{ padding: '0.3rem 0.6rem' }}
                 onClick={() => setEmailPreview(null)}>✕</button>
             </div>
             <div style={{ background: 'var(--surface-2)', borderRadius: 8, padding: '0.75rem 1rem', marginBottom: '1rem' }}>
               <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Subject: </span>
-              <span style={{ fontWeight: 600 }}>{emailPreview.subject}</span>
+              <span style={{ fontWeight: 600, fontSize: '0.875rem', wordBreak: 'break-word' }}>{emailPreview.subject}</span>
             </div>
             <pre style={{
               fontFamily: 'Outfit, sans-serif', fontSize: '0.85rem',
               color: 'var(--text-secondary)', lineHeight: 1.8,
               whiteSpace: 'pre-wrap', background: 'var(--surface-2)',
-              borderRadius: 8, padding: '1rem'
+              borderRadius: 8, padding: '1rem', overflow: 'auto'
             }}>
               {emailPreview.body}
             </pre>
-            <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1rem', justifyContent: 'flex-end' }}>
+            <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1rem', justifyContent: 'flex-end', flexWrap: 'wrap' }}>
               <button className="btn btn-outline" onClick={() => setEmailPreview(null)}>Close</button>
               <button className="btn btn-primary" onClick={() => {
                 navigator.clipboard.writeText(`Subject: ${emailPreview.subject}\n\n${emailPreview.body}`);

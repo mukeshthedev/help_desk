@@ -56,23 +56,23 @@ function InlineTracker({ ticketId }) {
   const SIcon = sCfg.icon;
 
   return (
-    <div style={{ padding: '1.5rem', background: 'var(--surface)', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+    <div style={{ padding: '1.25rem', background: 'var(--surface)', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
 
       {/* Status row */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-        <div style={{ width: 48, height: 48, borderRadius: '50%', background: sCfg.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: `0 0 16px ${sCfg.color}40` }}>
-          {SIcon && <SIcon size={22} color={sCfg.color} />}
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.875rem' }}>
+        <div style={{ width: 44, height: 44, borderRadius: '50%', background: sCfg.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: `0 0 16px ${sCfg.color}40` }}>
+          {SIcon && <SIcon size={20} color={sCfg.color} />}
         </div>
-        <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.25rem' }}>
-            <span style={{ background: sCfg.bg, color: sCfg.color, border: `1px solid ${sCfg.color}50`, borderRadius: 999, padding: '0.2rem 0.7rem', fontSize: '0.73rem', fontWeight: 700 }}>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap', marginBottom: '0.25rem' }}>
+            <span style={{ background: sCfg.bg, color: sCfg.color, border: `1px solid ${sCfg.color}50`, borderRadius: 999, padding: '0.2rem 0.6rem', fontSize: '0.7rem', fontWeight: 700 }}>
               {complaint.status}
             </span>
-            <span style={{ background: `${pCfg.color}18`, color: pCfg.color, borderRadius: 999, padding: '0.2rem 0.7rem', fontSize: '0.73rem', fontWeight: 600 }}>
+            <span style={{ background: `${pCfg.color}18`, color: pCfg.color, borderRadius: 999, padding: '0.2rem 0.6rem', fontSize: '0.7rem', fontWeight: 600 }}>
               {complaint.priority} Priority
             </span>
           </div>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.82rem', lineHeight: 1.5 }}>{sCfg.desc}</p>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.8rem', lineHeight: 1.5, margin: 0 }}>{sCfg.desc}</p>
         </div>
       </div>
 
@@ -95,7 +95,7 @@ function InlineTracker({ ticketId }) {
             return (
               <div key={step} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.4rem', position: 'relative', zIndex: 2 }}>
                 <div style={{
-                  width: 32, height: 32, borderRadius: '50%',
+                  width: 30, height: 30, borderRadius: '50%',
                   background: done ? cfg.color : 'var(--surface-2)',
                   border: `2px solid ${done ? cfg.color : 'var(--surface-3)'}`,
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -103,11 +103,11 @@ function InlineTracker({ ticketId }) {
                   transition: 'all 0.4s ease'
                 }}>
                   {done
-                    ? <CheckCircle size={14} color="white" />
-                    : <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--surface-3)' }} />
+                    ? <CheckCircle size={13} color="white" />
+                    : <div style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--surface-3)' }} />
                   }
                 </div>
-                <span style={{ fontSize: '0.65rem', fontWeight: done ? 700 : 400, color: done ? cfg.color : 'var(--text-muted)', whiteSpace: 'nowrap' }}>
+                <span style={{ fontSize: '0.6rem', fontWeight: done ? 700 : 400, color: done ? cfg.color : 'var(--text-muted)', whiteSpace: 'nowrap' }}>
                   {step}
                 </span>
               </div>
@@ -127,16 +127,16 @@ function InlineTracker({ ticketId }) {
             { icon: Clock,       color: 'var(--warning)',  label: 'Last Updated', time: complaint.updatedAt },
             ...(complaint.resolvedAt ? [{ icon: CheckCircle, color: 'var(--success)', label: 'Resolved', time: complaint.resolvedAt }] : [])
           ].map(({ icon: Icon, color, label, time }, i, arr) => (
-            <div key={label} style={{ display: 'flex', gap: '0.875rem' }}>
+            <div key={label} style={{ display: 'flex', gap: '0.75rem' }}>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0 }}>
-                <div style={{ width: 30, height: 30, borderRadius: '50%', background: `${color}18`, display: 'flex', alignItems: 'center', justifyContent: 'center', color }}>
-                  <Icon size={13} />
+                <div style={{ width: 28, height: 28, borderRadius: '50%', background: `${color}18`, display: 'flex', alignItems: 'center', justifyContent: 'center', color }}>
+                  <Icon size={12} />
                 </div>
-                {i < arr.length - 1 && <div style={{ width: 2, height: 24, background: 'var(--border)', margin: '2px 0' }} />}
+                {i < arr.length - 1 && <div style={{ width: 2, height: 22, background: 'var(--border)', margin: '2px 0' }} />}
               </div>
-              <div style={{ paddingTop: '0.35rem' }}>
-                <div style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--text-primary)' }}>{label}</div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.1rem' }}>
+              <div style={{ paddingTop: '0.3rem' }}>
+                <div style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-primary)' }}>{label}</div>
+                <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '0.1rem' }}>
                   {new Date(time).toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
                 </div>
               </div>
@@ -191,31 +191,36 @@ export default function SubmitComplaint() {
           70%  { transform: scale(1.08); }
           100% { transform: scale(1);   opacity: 1; }
         }
+        @media (max-width: 768px) {
+          .success-grid { grid-template-columns: 1fr 1fr !important; gap: 0.75rem !important; }
+          .success-btns { flex-direction: column !important; }
+          .success-btns button { width: 100% !important; justify-content: center !important; }
+        }
       `}</style>
 
       {/* Tick + heading */}
-      <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+      <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
         <div style={{
-          width: 80, height: 80,
+          width: 72, height: 72,
           background: 'rgba(16,185,129,0.12)',
           borderRadius: '50%',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          margin: '0 auto 1.25rem',
+          margin: '0 auto 1rem',
           animation: 'popIn 0.5s cubic-bezier(0.4,0,0.2,1)'
         }}>
-          <CheckCircle size={42} color="var(--success)" />
+          <CheckCircle size={38} color="var(--success)" />
         </div>
-        <h2 style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.4rem' }}>
+        <h2 style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.4rem' }}>
           Complaint Submitted!
         </h2>
-        <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
+        <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
           Our team will get back to you shortly.
         </p>
       </div>
 
       {/* Ticket info */}
-      <div className="card" style={{ marginBottom: '1.25rem' }}>
-        <div className="grid-2">
+      <div className="card" style={{ marginBottom: '1.25rem', padding: '1.25rem' }}>
+        <div className="success-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
           {[
             ['Ticket ID',  success.ticketId,     true ],
             ['Status',     success.status,        false],
@@ -223,10 +228,10 @@ export default function SubmitComplaint() {
             ['Priority',   success.priority,      false]
           ].map(([label, value, mono]) => (
             <div key={label}>
-              <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginBottom: '0.3rem', textTransform: 'uppercase', fontWeight: 700 }}>
+              <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginBottom: '0.3rem', textTransform: 'uppercase', fontWeight: 700 }}>
                 {label}
               </div>
-              <div className={mono ? 'mono' : ''} style={{ color: 'var(--text-primary)', fontWeight: 600, fontSize: mono ? '1rem' : '0.95rem' }}>
+              <div className={mono ? 'mono' : ''} style={{ color: 'var(--text-primary)', fontWeight: 600, fontSize: mono ? '0.9rem' : '0.875rem', wordBreak: 'break-all' }}>
                 {value}
               </div>
             </div>
@@ -235,7 +240,7 @@ export default function SubmitComplaint() {
       </div>
 
       {/* Buttons */}
-      <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', marginBottom: '1.5rem' }}>
+      <div className="success-btns" style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', marginBottom: '1.5rem' }}>
         <button className="btn btn-primary" onClick={() => setShowTracker(t => !t)}>
           <Search size={15} />
           {showTracker ? 'Hide Tracker' : 'Track My Complaint'}
@@ -247,13 +252,13 @@ export default function SubmitComplaint() {
 
       {/* Inline tracker */}
       {showTracker && (
-        <div style={{ border: '1px solid var(--border)', borderRadius: 16, overflow: 'hidden', animation: 'fadeIn 0.35s ease' }}>
-          <div style={{ background: 'var(--surface-2)', padding: '0.875rem 1.25rem', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <div style={{ border: '1px solid var(--border)', borderRadius: 16, overflow: 'hidden' }}>
+          <div style={{ background: 'var(--surface-2)', padding: '0.875rem 1.25rem', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
             <Search size={15} color="var(--accent)" />
             <span style={{ fontWeight: 600, fontSize: '0.875rem', color: 'var(--text-primary)' }}>
               Live Complaint Tracker
             </span>
-            <span style={{ marginLeft: 'auto', fontFamily: 'Space Mono,monospace', fontSize: '0.75rem', color: 'var(--accent-light)' }}>
+            <span style={{ marginLeft: 'auto', fontFamily: 'Space Mono,monospace', fontSize: '0.72rem', color: 'var(--accent-light)' }}>
               {success.ticketId}
             </span>
           </div>
@@ -266,13 +271,27 @@ export default function SubmitComplaint() {
   // ── Form ──────────────────────────────────────────────────────────────────
   return (
     <div className="fade-in" style={{ maxWidth: 720, margin: '0 auto' }}>
+      <style>{`
+        @media (max-width: 768px) {
+          .form-grid-2 { grid-template-columns: 1fr !important; }
+          .form-actions { flex-direction: column-reverse !important; }
+          .form-actions button { width: 100% !important; justify-content: center !important; }
+          .page-title-resp { font-size: 1.3rem !important; }
+        }
+      `}</style>
+
       <div className="page-header">
-        <h1 className="page-title">Submit a Complaint</h1>
+        <h1 className="page-title page-title-resp">Submit a Complaint</h1>
         <p className="page-subtitle">Report your IT issue and our team will assist you promptly</p>
       </div>
 
       {error && (
-        <div style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', borderRadius: 'var(--radius-sm)', padding: '0.875rem 1rem', color: 'var(--danger)', display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem', fontSize: '0.875rem' }}>
+        <div style={{
+          background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)',
+          borderRadius: 'var(--radius-sm)', padding: '0.875rem 1rem',
+          color: 'var(--danger)', display: 'flex', alignItems: 'center',
+          gap: '0.5rem', marginBottom: '1.5rem', fontSize: '0.875rem'
+        }}>
           <AlertCircle size={16} />{error}
         </div>
       )}
@@ -281,7 +300,8 @@ export default function SubmitComplaint() {
 
         {/* ── Student Information ── */}
         <div className="section-title" style={{ marginBottom: '1.25rem' }}>Student Information</div>
-        <div className="grid-2">
+
+        <div className="form-grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
           <div className="form-group">
             <label className="form-label">Full Name *</label>
             <input
@@ -302,7 +322,7 @@ export default function SubmitComplaint() {
           </div>
         </div>
 
-        <div className="grid-2">
+        <div className="form-grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
           <div className="form-group">
             <label className="form-label">Email Address *</label>
             <input
@@ -314,7 +334,6 @@ export default function SubmitComplaint() {
             />
           </div>
 
-          {/* Department with Other option */}
           <div className="form-group">
             <label className="form-label">Department *</label>
             <select
@@ -336,8 +355,6 @@ export default function SubmitComplaint() {
               ))}
               <option value="Other">Other</option>
             </select>
-
-            {/* Custom input appears when Other is selected */}
             {otherDept && (
               <input
                 className="form-input"
@@ -356,7 +373,7 @@ export default function SubmitComplaint() {
         {/* ── Issue Details ── */}
         <div className="section-title" style={{ marginBottom: '1.25rem' }}>Issue Details</div>
 
-        <div className="grid-2">
+        <div className="form-grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
           <div className="form-group">
             <label className="form-label">Issue Category *</label>
             <select
@@ -411,10 +428,10 @@ export default function SubmitComplaint() {
           />
         </div>
 
-        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem', marginTop: '0.5rem' }}>
+        <div className="form-actions" style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem', marginTop: '0.5rem' }}>
           <button className="btn btn-outline" onClick={() => navigate('/')}>Cancel</button>
           <button className="btn btn-primary" onClick={handleSubmit} disabled={loading}>
-            {loading ? 'Submitting...' : <><Send size={15} />Submit Complaint</>}
+            {loading ? 'Submitting...' : <><Send size={15} /> Submit Complaint</>}
           </button>
         </div>
       </div>

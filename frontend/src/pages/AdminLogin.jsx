@@ -202,11 +202,11 @@ export default function AdminLogin() {
         </div>
 
         {/* Student buttons — visible and clear */}
-        <div style={{ marginTop: '1rem', display: 'flex', gap: '0.75rem' }}>
+        <div style={{ marginTop: '1rem', display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
           <a href="/submit"
             className="student-btn"
             style={{
-              flex: 1, textAlign: 'center',
+              flex: 1, minWidth: 140, textAlign: 'center',
               padding: '0.875rem',
               background: 'rgba(99,102,241,0.12)',
               border: '1px solid rgba(99,102,241,0.3)',
@@ -223,7 +223,7 @@ export default function AdminLogin() {
           <a href="/track"
             className="student-btn"
             style={{
-              flex: 1, textAlign: 'center',
+              flex: 1, minWidth: 140, textAlign: 'center',
               padding: '0.875rem',
               background: 'rgba(16,185,129,0.1)',
               border: '1px solid rgba(16,185,129,0.3)',
